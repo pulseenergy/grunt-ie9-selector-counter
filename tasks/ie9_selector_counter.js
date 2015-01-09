@@ -18,6 +18,7 @@ module.exports = function(grunt) {
     var options = this.options({}),
       fileCount = 0;
 
+    var failTask = false;
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
       // Concat specified files.
@@ -27,6 +28,7 @@ module.exports = function(grunt) {
         var count = counter.count(filepath);
         if(count > 4095) {
           grunt.log.error(filepath + ' has ' + (count - 4096) + ' too many selectors');
+          failTask = true;
         } else {
           grunt.verbose.ok(filepath + ' has ' + count + ' selectors');
         }
@@ -34,6 +36,7 @@ module.exports = function(grunt) {
     });
 
     grunt.log.ok(fileCount + ' file' + (fileCount === 1 ? '' : 's') + ' are error free.');
+    return !failTask;
   });
 
 };
