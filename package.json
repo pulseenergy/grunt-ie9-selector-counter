@@ -42,7 +42,7 @@
     "gruntplugin"
   ],
   "dependencies": {
-    "ie9-selector-counter": "0.0.4",
+    "ie9-selector-counter": "git://github.com/gcoombe/ie9-selector-count",
     "grunt": "~0.4.1"
   }
 }
