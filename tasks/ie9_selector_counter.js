@@ -8,6 +8,8 @@
 
 'use strict';
 
+var async = require('async');
+
 module.exports = function(grunt) {
 
   // Internal lib.
@@ -15,28 +17,32 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('ie9_selector_counter', 'Validate CSS files with IE9 selector counter.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
+    var done = this.async();
     var options = this.options({}),
       fileCount = 0;
 
     var failTask = false;
     // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
+    async.each(this.files, function(f, filesCallback) {
       // Concat specified files.
-      f.src.map(function(filepath) {
+      async.map(f.src, function(filepath, fileCallback) {
         fileCount++;
         // Run validation
-        var count = counter.count(filepath);
-        if(count > 4095) {
-          grunt.log.error(filepath + ' has ' + (count - 4096) + ' too many selectors');
-          failTask = true;
-        } else {
-          grunt.verbose.ok(filepath + ' has ' + count + ' selectors');
+        counter.count(filepath, function (count) {
+            if(count > 4095) {
+                grunt.log.error(filepath + ' has ' + (4096 - count) + ' too many selectors');
+                failTask = true;
+            } else {
+                grunt.verbose.ok(filepath + ' has ' + count + ' selectors');
+            }
+            fileCallback();
+        });
+      }, filesCallback);
+    }, function () {
+        if (!failTask) {
+            grunt.log.ok(fileCount + ' file' + (fileCount === 1 ? '' : 's') + ' are error free.');
         }
-      });
+        done(!failTask);
     });
-
-    grunt.log.ok(fileCount + ' file' + (fileCount === 1 ? '' : 's') + ' are error free.');
-    return !failTask;
   });
-
 };
