@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/xzyfer/grunt-ie9-selector-counter.git"
+    "url": "git://github.com/pulseenergy/grunt-ie9-selector-counter.git"
   },
   "bugs": {
     "url": "https://github.com/xzyfer/grunt-ie9-selector-counter/issues"
