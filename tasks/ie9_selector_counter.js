@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         // Run validation
         counter.count(filepath, function (count) {
             if(count > 4095) {
-                grunt.log.error(filepath + ' has ' + (4096 - count) + ' too many selectors');
+                grunt.log.error(filepath + ' has ' + (count - 4096) + ' too many selectors');
                 failTask = true;
             } else {
                 grunt.verbose.ok(filepath + ' has ' + count + ' selectors');
