@@ -40,6 +40,6 @@
   ],
   "dependencies": {
     "async": "^0.9.0",
-    "ie9-selector-counter": "git://github.com/pulseenergy/ie9-selector-counter"
+    "ie9-selector-counter": "pulseenergy/ie9-selector-counter"
   }
 }
